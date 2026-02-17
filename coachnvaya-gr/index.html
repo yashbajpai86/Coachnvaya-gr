@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Nvaya Review Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #f3e5f5, #ffffff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #222;
+        }
+
+        h1 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        #reviewBox {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 420px;
+            word-wrap: break-word;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #6a1b9a;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #4a148c;
+        }
+
+        #qrcode {
+            margin-top: 30px;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        @media(max-width:500px) {
+            h1 {
+                font-size: 1.3rem
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Coach Nvaya Google Review Portal</h1>
+    <p>Scan the QR code to generate a unique review message. Click "Copy & Leave Review" to proceed.</p>
+
+    <div id="reviewBox">Generating review message...</div>
+    <button id="copyBtn">Copy & Leave Review ⭐</button>
+
+    <div id="qrcode"></div>
+
+    <footer>© 2026 Coach Nvaya | Made with ❤️ by Yash</footer>
+
+    <script>
+        //const GOOGLE_REVIEW_LINK = "PASTE_COACH_NVAYA_GOOGLE_REVIEW_LINK_HERE";
+        const GOOGLE_REVIEW_LINK = "https://g.page/r/CX7ImSKKAGMCEBI/review";
+        const COACH_NAME = "Coach Nvaya";
+
+        const services = [
+            "Parenting Coaching",
+            "Child Psychology Sessions",
+            "Personal Counseling",
+            "Psychotherapy",
+            "NLP Master Practitioner Guidance",
+            "Handwriting Analysis",
+            "Grapho Therapy",
+            "Breakthrough Coaching",
+            "Career & Mindset Coaching"
+        ];
+
+        const adjectives = [
+            "compassionate",
+            "supportive",
+            "professional",
+            "understanding",
+            "knowledgeable",
+            "insightful",
+            "patient",
+            "motivating",
+            "caring",
+            "experienced"
+        ];
+
+        const phrases = [
+            "helped me gain clarity in life",
+            "guided me through emotional challenges",
+            "transformed my mindset positively",
+            "gave practical and effective solutions",
+            "made me feel comfortable and heard",
+            "helped my child improve confidently",
+            "provided deep psychological insights",
+            "supported me during tough times",
+            "brought positive transformation in my life",
+            "boosted my confidence tremendously"
+        ];
+
+        function generateReview() {
+            const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const phr = phrases[Math.floor(Math.random() * phrases.length)];
+            const service = services[Math.floor(Math.random() * services.length)];
+
+            const templates = [
+                `${COACH_NAME} is a very ${adj} coach. Her ${service} session really ${phr}. Highly recommended!`,
+                `Had an amazing experience with ${COACH_NAME} for ${service}. She is very ${adj} and ${phr}.`,
+                `I’m truly grateful to ${COACH_NAME}. Her ${service} ${phr} and she is extremely ${adj}.`,
+                `${COACH_NAME} provides excellent ${service}. She is very ${adj} and ${phr}.`,
+                `One of the most ${adj} coaches I’ve met. ${COACH_NAME}’s ${service} ${phr}.`
+            ];
+
+            return templates[Math.floor(Math.random() * templates.length)];
+        }
+
+        const recent = [];
+
+        function generateUnique() {
+            let attempt = 0;
+            let msg = generateReview();
+
+            while (recent.includes(msg) && attempt < 10) {
+                msg = generateReview();
+                attempt++;
+            }
+
+            recent.push(msg);
+            if (recent.length > 12) recent.shift();
+
+            return msg;
+        }
+
+        let currentMessage = generateUnique();
+        document.getElementById("reviewBox").textContent = currentMessage;
+
+        document.getElementById("copyBtn").addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(currentMessage);
+            } catch (e) {
+                alert("Clipboard copy failed. Please copy manually.");
+            }
+            window.location.href = GOOGLE_REVIEW_LINK;
+        });
+
+        new QRCode(document.getElementById("qrcode"), {
+            text: window.location.href,
+            width: 150,
+            height: 150
+        });
+    </script>
+</body>
+
+</html>
